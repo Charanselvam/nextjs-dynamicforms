@@ -1,113 +1,191 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from 'react';
+import TextBox from './ui/components/TextBox';
+import EmailInput from './ui/components/EmailInput';
+import DateInput from './ui/components/DateInput';
+import Dropdown from './ui/components/Dropdown';
+import TelInput from './ui/components/TelInput';
+import CheckBox from './ui/components/CheckBox';
+import RadioButton from './ui/components/RadioButton';
+import Section from './ui/components/Section';
+import ToggleButton from './ui/components/ToggleButton';
+import { fetchFormData, saveFormData, generateUniqueId } from './utils/formHelpers';
+
+const componentMap = {
+  text: TextBox,
+  email: EmailInput,
+  date: DateInput,
+  select: Dropdown,
+  tel: TelInput,
+  checkbox: CheckBox,
+  radio: RadioButton,
+  toggle: ToggleButton
+};
+
+const IndexPage = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({});
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const initializeForm = async () => {
+      try {
+        const jsonData = await fetchFormData();
+        setData(jsonData);
+      } catch (error) {
+        console.error('Error initializing form:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeForm();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const sectionName = data.sections[currentSectionIndex].title.trim();
+
+    setFormData(prev => ({
+      ...prev,
+      [sectionName]: {
+        ...prev[sectionName],
+        [name.trim()]: type === 'checkbox' ? checked : value
+      }
+    }));
+
+    // Clear errors for the field being edited
+    setErrors(prev => ({
+      ...prev,
+      [sectionName]: {
+        ...prev[sectionName],
+        [name.trim()]: ''
+      }
+    }));
+  };
+
+  const validateSection = () => {
+    const currentSection = data.sections[currentSectionIndex];
+    const sectionName = currentSection.title.trim();
+    const sectionErrors = {};
+
+    currentSection.components.forEach(component => {
+      if (component.required && !formData[sectionName]?.[component.name.trim()]) {
+        sectionErrors[component.name.trim()] = `${component.name.trim()} is required.`;
+      }
+    });
+
+    if (Object.keys(sectionErrors).length > 0) {
+      setErrors(prev => ({
+        ...prev,
+        [sectionName]: sectionErrors
+      }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleNext = () => {
+    if (validateSection()) {
+      console.log("Form data after completing current section:", formData);
+      if (currentSectionIndex < data.sections.length - 1) {
+        setCurrentSectionIndex(currentSectionIndex + 1);
+      }
+    }
+  };
+
+  const handleBack = () => {
+    if (currentSectionIndex > 0) {
+      setCurrentSectionIndex(currentSectionIndex - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (validateSection()) {
+      try {
+        const result = await saveFormData(formData);
+        console.log('Form submitted successfully:', result);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>Error loading form configuration.</div>;
+  }
+
+  const currentSection = data.sections[currentSectionIndex];
+  const nextSectionName = data.sections[currentSectionIndex + 1]?.title;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">{currentSection.title}</h1>
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-6 bg-white p-6 rounded-lg shadow-lg">
+        <Section title={currentSection.title}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {currentSection.components.map((component, idx) => {
+              const Component = componentMap[component.type];
+              if (!Component) return null;
+
+              return (
+                <div key={idx} className="flex flex-col">
+                  <label className="mb-2 text-gray-700 font-semibold">{component.name.trim()}</label>
+                  <Component
+                    name={component.name.trim()}
+                    value={formData[currentSection.title]?.[component.name.trim()] || ''}
+                    onChange={handleChange}
+                    placeholder={component.placeholder}
+                    required={component.required}
+                    options={component.options}
+                    className={component.className}
+                  />
+                  {errors[currentSection.title]?.[component.name.trim()] && (
+                    <span className="text-red-500">{errors[currentSection.title][component.name.trim()]}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={handleBack}
+            className={`py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 ${currentSectionIndex === 0 && 'opacity-50 cursor-not-allowed'}`}
+            disabled={currentSectionIndex === 0}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            Back
+          </button>
+          {currentSectionIndex < data.sections.length - 1 ? (
+            <button
+              type="button"
+              onClick={handleNext}
+              className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+            >
+              Continue to {nextSectionName}
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="py-2 px-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          )}
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </form>
+    </div>
   );
-}
+};
+
+export default IndexPage;

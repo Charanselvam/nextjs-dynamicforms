@@ -1,0 +1,362 @@
+{
+  "sections": [
+    {
+      "title": "Personal Information",
+      "components": [
+        {
+          "type": "text",
+          "name": "firstname  ",
+          "placeholder": "First Name",
+          "required": true,
+          "layout": "half"
+        },
+        {
+          "type": "text",
+          "name": "lastName",
+          "placeholder": "Last Name",
+          "required": true,
+          "layout": "half"
+        },
+        {
+          "type": "date",
+          "name": "dob",
+          "placeholder": "Date of Birth",
+          "required": true
+        },
+        {
+          "type": "select",
+          "name": "gender",
+          "placeholder": "Gender",
+          "required": true,
+          "options": [
+            { "Value": "male", "DisplayValue": "Male" },
+            { "Value": "female", "DisplayValue": "Female" },
+            { "Value": "other", "DisplayValue": "Other" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "maritalStatus",
+          "placeholder": "Marital Status",
+          "required": true,
+          "options": [
+            { "Value": "never_married", "DisplayValue": "Never Married" },
+            { "Value": "divorced", "DisplayValue": "Divorced" },
+            { "Value": "widowed", "DisplayValue": "Widowed" },
+            { "Value": "separated", "DisplayValue": "Separated" }
+          ]
+        },
+        {
+          "type": "tel",
+          "name": "phoneNumber",
+          "placeholder": "Phone Number",
+          "required": true
+        },
+        {
+          "type": "email",
+          "name": "email",
+          "placeholder": "Email",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Family Information",
+      "components": [
+        {
+          "type": "text",
+          "name": "fatherName",
+          "placeholder": "Father's Name",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "motherName",
+          "placeholder": "Mother's Name",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "siblings",
+          "placeholder": "Siblings (e.g., 1 Brother, 2 Sisters)",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "familyStatus",
+          "placeholder": "Family Status (e.g., Upper Middle Class)",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "familyType",
+          "placeholder": "Family Type (e.g., Joint Family)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Educational Information",
+      "components": [
+        {
+          "type": "text",
+          "name": "highestQualification",
+          "placeholder": "Highest Qualification",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "collegeName",
+          "placeholder": "College/University Name",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "occupation",
+          "placeholder": "Occupation",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "employerName",
+          "placeholder": "Employer Name",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "annualIncome",
+          "placeholder": "Annual Income",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Physical Information",
+      "components": [
+        {
+          "type": "text",
+          "name": "height",
+          "placeholder": "Height (e.g., 5'8\")",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "weight",
+          "placeholder": "Weight (e.g., 70 kg)",
+          "required": true
+        },
+        {
+          "type": "select",
+          "name": "bodyType",
+          "placeholder": "Body Type",
+          "required": true,
+          "options": [
+            { "Value": "slim", "DisplayValue": "Slim" },
+            { "Value": "athletic", "DisplayValue": "Athletic" },
+            { "Value": "average", "DisplayValue": "Average" },
+            { "Value": "heavy", "DisplayValue": "Heavy" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "complexion",
+          "placeholder": "Complexion",
+          "required": true,
+          "options": [
+            { "Value": "fair", "DisplayValue": "Fair" },
+            { "Value": "wheatish", "DisplayValue": "Wheatish" },
+            { "Value": "dark", "DisplayValue": "Dark" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "physicalStatus",
+          "placeholder": "Physical Status",
+          "required": true,
+          "options": [
+            { "Value": "normal", "DisplayValue": "Normal" },
+            { "Value": "physically_challenged", "DisplayValue": "Physically Challenged" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lifestyle Information",
+      "components": [
+        {
+          "type": "select",
+          "name": "diet",
+          "placeholder": "Diet",
+          "required": true,
+          "options": [
+            { "Value": "vegetarian", "DisplayValue": "Vegetarian" },
+            { "Value": "non_vegetarian", "DisplayValue": "Non-Vegetarian" },
+            { "Value": "eggetarian", "DisplayValue": "Eggetarian" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "smoking",
+          "placeholder": "Smoking",
+          "required": true,
+          "options": [
+            { "Value": "non_smoker", "DisplayValue": "Non-Smoker" },
+            { "Value": "occasional_smoker", "DisplayValue": "Occasional Smoker" },
+            { "Value": "regular_smoker", "DisplayValue": "Regular Smoker" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "drinking",
+          "placeholder": "Drinking",
+          "required": true,
+          "options": [
+            { "Value": "non_drinker", "DisplayValue": "Non-Drinker" },
+            { "Value": "occasional_drinker", "DisplayValue": "Occasional Drinker" },
+            { "Value": "regular_drinker", "DisplayValue": "Regular Drinker" }
+          ]
+        },
+        {
+          "type": "multiSelect",
+          "name": "hobbies",
+          "placeholder": "Select Hobbies",
+          "required": false,
+          "options": [
+            { "Value": "reading", "DisplayValue": "Reading" },
+            { "Value": "traveling", "DisplayValue": "Traveling" },
+            { "Value": "sports", "DisplayValue": "Sports" },
+            { "Value": "music", "DisplayValue": "Music" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Partner Preferences",
+      "components": [
+        {
+          "type": "text",
+          "name": "partnerAgeRange",
+          "placeholder": "Preferred Age Range (e.g., 25-30)",
+          "required": true
+        },
+        {
+          "type": "text",
+          "name": "partnerHeightRange",
+          "placeholder": "Preferred Height Range (e.g., 5'2\"-5'8\")",
+          "required": true
+        },
+        {
+          "type": "select",
+          "name": "partnerReligion",
+          "placeholder": "Preferred Religion",
+          "required": true,
+          "options": [
+            { "Value": "hindu", "DisplayValue": "Hindu" },
+            { "Value": "muslim", "DisplayValue": "Muslim" },
+            { "Value": "christian", "DisplayValue": "Christian" },
+            { "Value": "sikh", "DisplayValue": "Sikh" },
+            { "Value": "jain", "DisplayValue": "Jain" },
+            { "Value": "buddhist", "DisplayValue": "Buddhist" },
+            { "Value": "other", "DisplayValue": "Other" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerCaste",
+          "placeholder": "Preferred Caste",
+          "required": true,
+          "options": [
+            { "Value": "brahmin", "DisplayValue": "Brahmin" },
+            { "Value": "kshatriya", "DisplayValue": "Kshatriya" },
+            { "Value": "vaishya", "DisplayValue": "Vaishya" },
+            { "Value": "shudra", "DisplayValue": "Shudra" },
+            { "Value": "other", "DisplayValue": "Other" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerManglik",
+          "placeholder": "Manglik",
+          "required": true,
+          "options": [
+            { "Value": "yes", "DisplayValue": "Yes" },
+            { "Value": "no", "DisplayValue": "No" },
+            { "Value": "doesn't_matter", "DisplayValue": "Doesn't Matter" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerDiet",
+          "placeholder": "Diet",
+          "required": true,
+          "options": [
+            { "Value": "vegetarian", "DisplayValue": "Vegetarian" },
+            { "Value": "non_vegetarian", "DisplayValue": "Non-Vegetarian" },
+            { "Value": "eggetarian", "DisplayValue": "Eggetarian" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerSmoking",
+          "placeholder": "Smoking",
+          "required": true,
+          "options": [
+            { "Value": "non_smoker", "DisplayValue": "Non-Smoker" },
+            { "Value": "occasional_smoker", "DisplayValue": "Occasional Smoker" },
+            { "Value": "regular_smoker", "DisplayValue": "Regular Smoker" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerDrinking",
+          "placeholder": "Drinking",
+          "required": true,
+          "options": [
+            { "Value": "non_drinker", "DisplayValue": "Non-Drinker" },
+            { "Value": "occasional_drinker", "DisplayValue": "Occasional Drinker" },
+            { "Value": "regular_drinker", "DisplayValue": "Regular Drinker" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerBodyType",
+          "placeholder": "Body Type",
+          "required": true,
+          "options": [
+            { "Value": "slim", "DisplayValue": "Slim" },
+            { "Value": "athletic", "DisplayValue": "Athletic" },
+            { "Value": "average", "DisplayValue": "Average" },
+            { "Value": "heavy", "DisplayValue": "Heavy" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerComplexion",
+          "placeholder": "Complexion",
+          "required": true,
+          "options": [
+            { "Value": "fair", "DisplayValue": "Fair" },
+            { "Value": "wheatish", "DisplayValue": "Wheatish" },
+            { "Value": "dark", "DisplayValue": "Dark" }
+          ]
+        },
+        {
+          "type": "select",
+          "name": "partnerPhysicalStatus",
+          "placeholder": "Physical Status",
+          "required": true,
+          "options": [
+            { "Value": "normal", "DisplayValue": "Normal" },
+            { "Value": "physically_challenged", "DisplayValue": "Physically Challenged" }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "partnerHobbies",
+          "placeholder": "Hobbies and Interests",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
