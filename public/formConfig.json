@@ -5,28 +5,30 @@
       "components": [
         {
           "type": "text",
-          "name": "firstname  ",
-          "placeholder": "First Name",
-          "required": true,
-          "layout": "half"
+          "displayName": "First Name",
+          "keyName": "firstName",
+          "placeholder": "Enter your first name",
+          "required": true
         },
         {
           "type": "text",
-          "name": "lastName",
-          "placeholder": "Last Name",
-          "required": true,
-          "layout": "half"
+          "displayName": "Last Name",
+          "keyName": "lastName",
+          "placeholder": "Enter your last name",
+          "required": true
         },
         {
           "type": "date",
-          "name": "dob",
+          "displayName": "Date of Birth",
+          "keyName": "dob",
           "placeholder": "Date of Birth",
           "required": true
         },
         {
           "type": "select",
-          "name": "gender",
-          "placeholder": "Gender",
+          "keyName": "gender",
+          "displayName": "Gender",
+          "placeholder": "Choose your Gender",
           "required": true,
           "options": [
             { "Value": "male", "DisplayValue": "Male" },
@@ -36,8 +38,9 @@
         },
         {
           "type": "select",
-          "name": "maritalStatus",
-          "placeholder": "Marital Status",
+          "keyName": "maritalStatus",
+          "displayName": "Marital Status",
+          "placeholder": "Choose your Marital Status",
           "required": true,
           "options": [
             { "Value": "never_married", "DisplayValue": "Never Married" },
@@ -48,14 +51,15 @@
         },
         {
           "type": "tel",
-          "name": "phoneNumber",
-          "placeholder": "Phone Number",
+          "keyName": "phoneNumber",
+          "displayName": "Phone Number",
+          "placeholder": "Enter your phone number",
           "required": true
         },
         {
           "type": "email",
-          "name": "email",
-          "placeholder": "Email",
+          "keyName": "email",
+          "displayName": "Email",
           "required": true
         }
       ]
@@ -65,33 +69,57 @@
       "components": [
         {
           "type": "text",
-          "name": "fatherName",
+          "displayName": "Father's Name",
+          "keyName": "fatherName",
           "placeholder": "Father's Name",
           "required": true
         },
         {
           "type": "text",
-          "name": "motherName",
+          "displayName": "Mother's Name",
+          "keyName": "motherName",
           "placeholder": "Mother's Name",
           "required": true
         },
         {
-          "type": "text",
-          "name": "siblings",
-          "placeholder": "Siblings (e.g., 1 Brother, 2 Sisters)",
-          "required": true
+          "type": "select",
+          "displayName": "Siblings",
+          "keyName": "siblings",
+          "placeholder": "Siblings",
+          "required": true,
+          "options": [
+            { "Value": "0", "DisplayValue": "0" },
+            { "Value": "1", "DisplayValue": "1" },
+            { "Value": "2", "DisplayValue": "2" },
+            { "Value": "3", "DisplayValue": "3" },
+            { "Value": "4", "DisplayValue": "4" },
+            { "Value": "5", "DisplayValue": "5" },
+            { "Value": "more_than_5", "DisplayValue": "More than 5" }
+          ]
         },
         {
-          "type": "text",
-          "name": "familyStatus",
-          "placeholder": "Family Status (e.g., Upper Middle Class)",
-          "required": true
+          "type": "select",
+          "displayName": "Family Status",
+          "keyName": "familyStatus",
+          "placeholder": "Family Status",
+          "required": true,
+          "options": [
+            { "Value": "lower_class", "DisplayValue": "Lower Class" },
+            { "Value": "middle_class", "DisplayValue": "Middle Class" },
+            { "Value": "upper_middle_class", "DisplayValue": "Upper Middle Class" },
+            { "Value": "rich", "DisplayValue": "Rich" }
+          ]
         },
         {
-          "type": "text",
-          "name": "familyType",
-          "placeholder": "Family Type (e.g., Joint Family)",
-          "required": true
+          "type": "select",
+          "displayName": "Family Type",
+          "keyName": "familyType",
+          "placeholder": "Family Type",
+          "required": true,
+          "options": [
+            { "Value": "joint_family", "DisplayValue": "Joint Family" },
+            { "Value": "nuclear_family", "DisplayValue": "Nuclear Family" }
+          ]
         }
       ]
     },
@@ -99,34 +127,58 @@
       "title": "Educational Information",
       "components": [
         {
-          "type": "text",
-          "name": "highestQualification",
+          "type": "select",
+          "displayName": "Highest Qualification",
+          "keyName": "highestQualification",
           "placeholder": "Highest Qualification",
-          "required": true
+          "required": true,
+          "options": [
+            { "Value": "high_school", "DisplayValue": "High School" },
+            { "Value": "bachelor_degree", "DisplayValue": "Bachelor's Degree" },
+            { "Value": "master_degree", "DisplayValue": "Master's Degree" },
+            { "Value": "phd", "DisplayValue": "PhD" }
+          ]
         },
         {
           "type": "text",
-          "name": "collegeName",
+          "displayName": "College/University Name",
+          "keyName": "collegeName",
           "placeholder": "College/University Name",
           "required": true
         },
         {
-          "type": "text",
-          "name": "occupation",
+          "type": "select",
+          "displayName": "Occupation",
+          "keyName": "occupation",
           "placeholder": "Occupation",
-          "required": true
+          "required": true,
+          "options": [
+            { "Value": "engineer", "DisplayValue": "Engineer" },
+            { "Value": "doctor", "DisplayValue": "Doctor" },
+            { "Value": "teacher", "DisplayValue": "Teacher" },
+            { "Value": "business", "DisplayValue": "Business" },
+            { "Value": "other", "DisplayValue": "Other" }
+          ]
         },
         {
           "type": "text",
-          "name": "employerName",
+          "displayName": "Employer Name",
+          "keyName": "employerName",
           "placeholder": "Employer Name",
           "required": true
         },
         {
-          "type": "text",
-          "name": "annualIncome",
+          "type": "select",
+          "displayName": "Annual Income",
+          "keyName": "annualIncome",
           "placeholder": "Annual Income",
-          "required": true
+          "required": true,
+          "options": [
+            { "Value": "less_than_5_lakhs", "DisplayValue": "Less than 5 Lakhs" },
+            { "Value": "5_to_10_lakhs", "DisplayValue": "5 to 10 Lakhs" },
+            { "Value": "10_to_20_lakhs", "DisplayValue": "10 to 20 Lakhs" },
+            { "Value": "more_than_20_lakhs", "DisplayValue": "More than 20 Lakhs" }
+          ]
         }
       ]
     },
@@ -134,20 +186,35 @@
       "title": "Physical Information",
       "components": [
         {
-          "type": "text",
-          "name": "height",
-          "placeholder": "Height (e.g., 5'8\")",
-          "required": true
-        },
-        {
-          "type": "text",
-          "name": "weight",
-          "placeholder": "Weight (e.g., 70 kg)",
-          "required": true
+          "type": "select",
+          "displayName": "Height",
+          "keyName": "height",
+          "placeholder": "Height",
+          "required": true,
+          "options": [
+            { "Value": "less_than_5ft", "DisplayValue": "Less than 5ft" },
+            { "Value": "5ft_to_5ft5in", "DisplayValue": "5ft to 5ft 5in" },
+            { "Value": "5ft5in_to_6ft", "DisplayValue": "5ft 5in to 6ft" },
+            { "Value": "more_than_6ft", "DisplayValue": "More than 6ft" }
+          ]
         },
         {
           "type": "select",
-          "name": "bodyType",
+          "displayName": "Weight",
+          "keyName": "weight",
+          "placeholder": "Weight",
+          "required": true,
+          "options": [
+            { "Value": "less_than_50kg", "DisplayValue": "Less than 50kg" },
+            { "Value": "50kg_to_60kg", "DisplayValue": "50kg to 60kg" },
+            { "Value": "60kg_to_70kg", "DisplayValue": "60kg to 70kg" },
+            { "Value": "more_than_70kg", "DisplayValue": "More than 70kg" }
+          ]
+        },
+        {
+          "type": "select",
+          "displayName": "Body Type",
+          "keyName": "bodyType",
           "placeholder": "Body Type",
           "required": true,
           "options": [
@@ -159,7 +226,8 @@
         },
         {
           "type": "select",
-          "name": "complexion",
+          "displayName": "Complexion",
+          "keyName": "complexion",
           "placeholder": "Complexion",
           "required": true,
           "options": [
@@ -170,7 +238,8 @@
         },
         {
           "type": "select",
-          "name": "physicalStatus",
+          "displayName": "Physical Status",
+          "keyName": "physicalStatus",
           "placeholder": "Physical Status",
           "required": true,
           "options": [
@@ -185,7 +254,8 @@
       "components": [
         {
           "type": "select",
-          "name": "diet",
+          "displayName": "Diet",
+          "keyName": "diet",
           "placeholder": "Diet",
           "required": true,
           "options": [
@@ -196,7 +266,8 @@
         },
         {
           "type": "select",
-          "name": "smoking",
+          "displayName": "Smoking",
+          "keyName": "smoking",
           "placeholder": "Smoking",
           "required": true,
           "options": [
@@ -207,25 +278,14 @@
         },
         {
           "type": "select",
-          "name": "drinking",
+          "displayName": "Drinking",
+          "keyName": "drinking",
           "placeholder": "Drinking",
           "required": true,
           "options": [
             { "Value": "non_drinker", "DisplayValue": "Non-Drinker" },
             { "Value": "occasional_drinker", "DisplayValue": "Occasional Drinker" },
             { "Value": "regular_drinker", "DisplayValue": "Regular Drinker" }
-          ]
-        },
-        {
-          "type": "multiSelect",
-          "name": "hobbies",
-          "placeholder": "Select Hobbies",
-          "required": false,
-          "options": [
-            { "Value": "reading", "DisplayValue": "Reading" },
-            { "Value": "traveling", "DisplayValue": "Traveling" },
-            { "Value": "sports", "DisplayValue": "Sports" },
-            { "Value": "music", "DisplayValue": "Music" }
           ]
         }
       ]
@@ -234,20 +294,37 @@
       "title": "Partner Preferences",
       "components": [
         {
-          "type": "text",
-          "name": "partnerAgeRange",
-          "placeholder": "Preferred Age Range (e.g., 25-30)",
-          "required": true
-        },
-        {
-          "type": "text",
-          "name": "partnerHeightRange",
-          "placeholder": "Preferred Height Range (e.g., 5'2\"-5'8\")",
-          "required": true
+          "type": "select",
+          "displayName": "Preferred Age Range",
+          "keyName": "partnerAgeRange",
+          "placeholder": "Preferred Age Range",
+          "required": true,
+          "options": [
+            { "Value": "18-25", "DisplayValue": "18-25" },
+            { "Value": "26-30", "DisplayValue": "26-30" },
+            { "Value": "31-35", "DisplayValue": "31-35" },
+            { "Value": "36-40", "DisplayValue": "36-40" },
+            { "Value": "41-45", "DisplayValue": "41-45" },
+            { "Value": "46-50", "DisplayValue": "46-50" }
+          ]
         },
         {
           "type": "select",
-          "name": "partnerReligion",
+          "displayName": "Preferred Height Range",
+          "keyName": "partnerHeightRange",
+          "placeholder": "Preferred Height Range",
+          "required": true,
+          "options": [
+            { "Value": "less_than_5ft", "DisplayValue": "Less than 5ft" },
+            { "Value": "5ft_to_5ft5in", "DisplayValue": "5ft to 5ft 5in" },
+            { "Value": "5ft5in_to_6ft", "DisplayValue": "5ft 5in to 6ft" },
+            { "Value": "more_than_6ft", "DisplayValue": "More than 6ft" }
+          ]
+        },
+        {
+          "type": "select",
+          "displayName": "Preferred Religion",
+          "keyName": "partnerReligion",
           "placeholder": "Preferred Religion",
           "required": true,
           "options": [
@@ -262,7 +339,8 @@
         },
         {
           "type": "select",
-          "name": "partnerCaste",
+          "displayName": "Preferred Caste",
+          "keyName": "partnerCaste",
           "placeholder": "Preferred Caste",
           "required": true,
           "options": [
@@ -275,7 +353,8 @@
         },
         {
           "type": "select",
-          "name": "partnerManglik",
+          "displayName": "Manglik",
+          "keyName": "partnerManglik",
           "placeholder": "Manglik",
           "required": true,
           "options": [
@@ -286,7 +365,8 @@
         },
         {
           "type": "select",
-          "name": "partnerDiet",
+          "displayName": "Diet",
+          "keyName": "partnerDiet",
           "placeholder": "Diet",
           "required": true,
           "options": [
@@ -297,7 +377,8 @@
         },
         {
           "type": "select",
-          "name": "partnerSmoking",
+          "displayName": "Smoking",
+          "keyName": "partnerSmoking",
           "placeholder": "Smoking",
           "required": true,
           "options": [
@@ -308,7 +389,8 @@
         },
         {
           "type": "select",
-          "name": "partnerDrinking",
+          "displayName": "Drinking",
+          "keyName": "partnerDrinking",
           "placeholder": "Drinking",
           "required": true,
           "options": [
@@ -319,7 +401,8 @@
         },
         {
           "type": "select",
-          "name": "partnerBodyType",
+          "displayName": "Body Type",
+          "keyName": "partnerBodyType",
           "placeholder": "Body Type",
           "required": true,
           "options": [
@@ -331,7 +414,8 @@
         },
         {
           "type": "select",
-          "name": "partnerComplexion",
+          "displayName": "Complexion",
+          "keyName": "partnerComplexion",
           "placeholder": "Complexion",
           "required": true,
           "options": [
@@ -342,7 +426,8 @@
         },
         {
           "type": "select",
-          "name": "partnerPhysicalStatus",
+          "displayName": "Physical Status",
+          "keyName": "partnerPhysicalStatus",
           "placeholder": "Physical Status",
           "required": true,
           "options": [
@@ -352,7 +437,8 @@
         },
         {
           "type": "text",
-          "name": "partnerHobbies",
+          "displayName": "Hobbies and Interests",
+          "keyName": "partnerHobbies",
           "placeholder": "Hobbies and Interests",
           "required": false
         }

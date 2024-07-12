@@ -73,8 +73,8 @@ const IndexPage = () => {
     const sectionErrors = {};
 
     currentSection.components.forEach(component => {
-      if (component.required && !formData[sectionName]?.[component.name.trim()]) {
-        sectionErrors[component.name.trim()] = `${component.name.trim()} is required.`;
+      if (component.required && !formData[sectionName]?.[component.keyName.trim()]) {
+        sectionErrors[component.keyName.trim()] = `${component.displayName.trim()} is required.`;
       }
     });
 
@@ -138,18 +138,18 @@ const IndexPage = () => {
 
               return (
                 <div key={idx} className="flex flex-col">
-                  <label className="mb-2 text-gray-700 font-semibold">{component.name.trim()}</label>
+                  <label className="mb-2 text-gray-700 font-semibold">{component.displayName}</label>
                   <Component
-                    name={component.name.trim()}
-                    value={formData[currentSection.title]?.[component.name.trim()] || ''}
+                    name={component.keyName.trim()}
+                    value={formData[currentSection.title]?.[component.keyName.trim()] || ''}
                     onChange={handleChange}
                     placeholder={component.placeholder}
                     required={component.required}
                     options={component.options}
                     className={component.className}
                   />
-                  {errors[currentSection.title]?.[component.name.trim()] && (
-                    <span className="text-red-500">{errors[currentSection.title][component.name.trim()]}</span>
+                  {errors[currentSection.title]?.[component.keyName.trim()] && (
+                    <span className="text-red-500">{errors[currentSection.title][component.keyName.trim()]}</span>
                   )}
                 </div>
               );
