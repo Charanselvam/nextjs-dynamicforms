@@ -67,35 +67,51 @@ const ProfileClientComponent: React.FC<ProfileClientComponentProps> = ({ userDat
     return sectionConfig ? sectionConfig.displayName : key;
   };
 
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
+  const getOrderedComponents = (section: string) => {
+    const sectionConfig = formConfig.sections?.find((sec: any) => sec.title === section);
+    if (sectionConfig) {
+      return sectionConfig.components
+        .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+        .map((comp: any) => (
+          <div key={comp.keyName} className="flex flex-col mb-4">
+            <span className="text-sm font-semibold text-gray-600">
+              {getDisplayName(section, comp.keyName).replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
+            </span>
+            <span className="text-lg font-medium text-gray-800">
+              {getDisplayValue(section, comp.keyName, userData[section][comp.keyName])}
+            </span>
+          </div>
+        ));
+    }
+    return null;
+  };
 
-      {Object.keys(userData).map((section) => (
-        <div key={section} className="mb-8 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+  const getOrderedSections = () => {
+    return formConfig.sections
+      ?.sort((a: any, b: any) => (a.index || 0) - (b.index || 0))
+      .map((section: any) => (
+        <div key={section.title} className="mb-8 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold text-blue-600">{section}</h2>
+            <h2 className="text-2xl font-semibold text-blue-600">{section.title}</h2>
             <button
               className="text-gray-500 hover:text-gray-700 cursor-pointer"
-              onClick={() => handleEditClick(section)}
+              onClick={() => handleEditClick(section.title)}
             >
               Edit
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {Object.entries(userData[section]).map(([key, value]) => (
-              <div key={key} className="flex flex-col">
-                <span className="text-sm font-semibold text-gray-600">
-                  {getDisplayName(section, key).replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
-                </span>
-                <span className="text-lg font-medium text-gray-800">
-                  {getDisplayValue(section, key, value)}
-                </span>
-              </div>
-            ))}
+            {getOrderedComponents(section.title)}
           </div>
         </div>
-      ))}
+      ));
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
+
+      {getOrderedSections()}
 
       {isEditing && editSection && editData && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

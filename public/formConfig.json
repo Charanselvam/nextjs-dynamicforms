@@ -60,7 +60,15 @@
           "type": "email",
           "keyName": "email",
           "displayName": "Email",
+          "placeholder": "Enter your email",
           "required": true
+        },
+        {
+          "type": "textarea",
+          "displayName": "Description",
+          "keyName": "description",
+          "placeholder": "Enter a description about yourself",
+          "required": false
         }
       ]
     },

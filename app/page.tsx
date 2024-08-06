@@ -14,6 +14,7 @@ const TelInput = dynamic(() => import('./ui/components/TelInput'));
 const CheckBox = dynamic(() => import('./ui/components/CheckBox'));
 const RadioButton = dynamic(() => import('./ui/components/RadioButton'));
 const ToggleButton = dynamic(() => import('./ui/components/ToggleButton'));
+const TextArea = dynamic(() => import('./ui/components/TextArea'));
 
 const componentMap = {
   text: TextBox,
@@ -23,7 +24,8 @@ const componentMap = {
   tel: TelInput,
   checkbox: CheckBox,
   radio: RadioButton,
-  toggle: ToggleButton
+  toggle: ToggleButton,
+  textarea: TextArea
 };
 
 const IndexPage = () => {
