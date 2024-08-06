@@ -1,16 +1,19 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import TextBox from './ui/components/TextBox';
-import EmailInput from './ui/components/EmailInput';
-import DateInput from './ui/components/DateInput';
-import Dropdown from './ui/components/Dropdown';
-import TelInput from './ui/components/TelInput';
-import CheckBox from './ui/components/CheckBox';
-import RadioButton from './ui/components/RadioButton';
+import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import Section from './ui/components/Section';
-import ToggleButton from './ui/components/ToggleButton';
 import { fetchFormData, saveFormData, generateUniqueId } from './utils/formHelpers';
+
+// Dynamic imports for form components
+const TextBox = dynamic(() => import('./ui/components/TextBox'));
+const EmailInput = dynamic(() => import('./ui/components/EmailInput'));
+const DateInput = dynamic(() => import('./ui/components/DateInput'));
+const Dropdown = dynamic(() => import('./ui/components/Dropdown'));
+const TelInput = dynamic(() => import('./ui/components/TelInput'));
+const CheckBox = dynamic(() => import('./ui/components/CheckBox'));
+const RadioButton = dynamic(() => import('./ui/components/RadioButton'));
+const ToggleButton = dynamic(() => import('./ui/components/ToggleButton'));
 
 const componentMap = {
   text: TextBox,
@@ -45,7 +48,7 @@ const IndexPage = () => {
     initializeForm();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
     const sectionName = data.sections[currentSectionIndex].title.trim();
 
@@ -65,9 +68,9 @@ const IndexPage = () => {
         [name.trim()]: ''
       }
     }));
-  };
+  }, [currentSectionIndex, data]);
 
-  const validateSection = () => {
+  const validateSection = useCallback(() => {
     const currentSection = data.sections[currentSectionIndex];
     const sectionName = currentSection.title.trim();
     const sectionErrors = {};
@@ -87,24 +90,23 @@ const IndexPage = () => {
     }
 
     return true;
-  };
+  }, [currentSectionIndex, data, formData]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (validateSection()) {
-      console.log("Form data after completing current section:", formData);
       if (currentSectionIndex < data.sections.length - 1) {
         setCurrentSectionIndex(currentSectionIndex + 1);
       }
     }
-  };
+  }, [validateSection, currentSectionIndex, data]);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (currentSectionIndex > 0) {
       setCurrentSectionIndex(currentSectionIndex - 1);
     }
-  };
+  }, [currentSectionIndex]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (validateSection()) {
       try {
         const result = await saveFormData(formData);
@@ -113,7 +115,7 @@ const IndexPage = () => {
         console.error('Error submitting form:', error);
       }
     }
-  };
+  }, [validateSection, formData]);
 
   if (loading) {
     return <div>Loading...</div>;
