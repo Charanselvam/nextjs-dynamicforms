@@ -10,8 +10,10 @@ export default function ProfilePage() {
   const [userId, setUserId] = useState('');
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleFetchUserData = async () => {
+    setLoading(true); // Start loading
     try {
       const data = await fetchUserData(userId);
       setUserData(data);
@@ -19,6 +21,8 @@ export default function ProfilePage() {
     } catch (err) {
       setError('User not found');
       setUserData(null);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -35,8 +39,9 @@ export default function ProfilePage() {
       <button
         onClick={handleFetchUserData}
         className="bg-blue-500 text-white px-4 py-2"
+        disabled={loading} // Disable button when loading
       >
-        Fetch Profile
+        {loading ? 'Loading...' : 'Fetch Profile'} // Display loading state
       </button>
 
       {error && <p className="text-red-500 mt-4">{error}</p>}
@@ -45,3 +50,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

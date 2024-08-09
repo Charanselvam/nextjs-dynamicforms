@@ -5,13 +5,15 @@ import { fetchFormData } from '../utils/formHelpers';
 
 interface ProfileClientComponentProps {
   userData: Record<string, Record<string, string>>;
+  userId: string; // Add userId prop for API requests
 }
 
-const ProfileClientComponent: React.FC<ProfileClientComponentProps> = ({ userData }) => {
+const ProfileClientComponent: React.FC<ProfileClientComponentProps> = ({ userData, userId }) => {
   const [formConfig, setFormConfig] = useState<any>({});
   const [isEditing, setIsEditing] = useState(false);
   const [editSection, setEditSection] = useState<string | null>(null);
   const [editData, setEditData] = useState<Record<string, string> | null>(null);
+  const [updateStatus, setUpdateStatus] = useState<string | null>(null);
 
   useEffect(() => {
     const loadFormConfig = async () => {
@@ -38,12 +40,32 @@ const ProfileClientComponent: React.FC<ProfileClientComponentProps> = ({ userDat
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editSection && editData) {
-      userData[editSection] = editData;
-      setIsEditing(false);
-      setEditSection(null);
-      setEditData(null);
+      try {
+        const response = await fetch(`/api/update/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ data: { ...userData, [editSection]: editData } }),
+        });
+
+        if (response.ok) {
+          setUpdateStatus('Data updated successfully');
+          userData[editSection] = editData; // Update local state
+        } else {
+          const { error } = await response.json();
+          setUpdateStatus(`Error: ${error}`);
+        }
+      } catch (error) {
+        setUpdateStatus('Error updating data');
+        console.error('Error updating form data:', error);
+      } finally {
+        setIsEditing(false);
+        setEditSection(null);
+        setEditData(null);
+      }
     }
   };
 
@@ -163,6 +185,11 @@ const ProfileClientComponent: React.FC<ProfileClientComponentProps> = ({ userDat
                 Cancel
               </button>
             </div>
+            {updateStatus && (
+              <div className="mt-4 text-center text-sm font-medium text-gray-700">
+                {updateStatus}
+              </div>
+            )}
           </div>
         </div>
       )}
